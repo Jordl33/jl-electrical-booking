@@ -85,19 +85,19 @@ export default function CalendarGrid({
   };
 
   const getSlotClassName = (status: SlotStatus, isClickable: boolean): string => {
-    const baseClasses = 'h-8 border-r border-b border-slate-100/50 text-xs font-medium transition-all duration-300 cursor-pointer relative hover:z-10 backdrop-blur-sm';
+    const baseClasses = 'h-12 m-0.5 rounded-xl text-xs font-semibold transition-all duration-300 cursor-pointer relative flex items-center justify-center border-0';
     
     switch (status) {
       case 'available':
-        return `${baseClasses} bg-gradient-to-br from-emerald-50/80 to-teal-50/80 hover:from-emerald-100/90 hover:to-teal-100/90 text-slate-700 hover:shadow-lg hover:shadow-emerald-500/10 border-l-2 border-l-transparent hover:border-l-emerald-400 hover:scale-[1.02] active:scale-[0.98]`;
+        return `${baseClasses} bg-gradient-to-br from-emerald-400 to-teal-500 text-white shadow-lg shadow-emerald-500/25 hover:shadow-xl hover:shadow-emerald-500/35 hover:scale-105 active:scale-95 hover:from-emerald-500 hover:to-teal-600`;
       case 'booked':
-        return `${baseClasses} bg-gradient-to-br from-slate-100/80 to-gray-100/80 text-slate-500 cursor-not-allowed border-l-2 border-l-slate-300/60 opacity-75`;
+        return `${baseClasses} bg-gradient-to-br from-slate-400 to-slate-500 text-white/90 cursor-not-allowed shadow-md shadow-slate-500/20 opacity-60`;
       case 'preview':
-        return `${baseClasses} bg-gradient-to-br from-blue-100/90 to-indigo-100/90 text-slate-800 shadow-lg shadow-blue-500/15 border-l-3 border-l-blue-400 scale-[1.02] ring-1 ring-blue-200/50 ${isClickable ? 'hover:from-blue-200/90 hover:to-indigo-200/90' : ''}`;
+        return `${baseClasses} bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-xl shadow-blue-500/30 scale-105 ring-2 ring-blue-300/50 ${isClickable ? 'hover:from-blue-600 hover:to-indigo-700 hover:shadow-2xl' : ''}`;
       case 'selected':
-        return `${baseClasses} bg-gradient-to-br from-blue-200/95 to-indigo-200/95 text-slate-900 shadow-xl shadow-blue-500/20 border-l-4 border-l-blue-600 font-semibold scale-[1.02] ring-2 ring-blue-300/50`;
+        return `${baseClasses} bg-gradient-to-br from-blue-600 to-indigo-700 text-white shadow-2xl shadow-blue-600/40 scale-105 ring-4 ring-blue-400/60 font-bold`;
       case 'conflict':
-        return `${baseClasses} bg-gradient-to-br from-orange-100/90 to-amber-100/90 text-slate-800 cursor-not-allowed shadow-lg shadow-orange-500/15 border-l-3 border-l-orange-400 scale-[1.02] ring-1 ring-orange-200/50`;
+        return `${baseClasses} bg-gradient-to-br from-orange-500 to-red-500 text-white cursor-not-allowed shadow-xl shadow-orange-500/30 scale-105 ring-2 ring-orange-300/50`;
       default:
         return baseClasses;
     }
@@ -132,7 +132,7 @@ export default function CalendarGrid({
 
   return (
     <div 
-      className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl shadow-slate-500/10 border border-slate-200/50 overflow-hidden ring-1 ring-slate-100/50"
+      className="bg-gradient-to-br from-gray-50 to-white rounded-3xl shadow-2xl shadow-gray-900/10 border border-gray-200/20 overflow-hidden p-6"
       onClick={(e) => {
         if (e.target === e.currentTarget) {
           onSlotDeselect();
@@ -140,9 +140,9 @@ export default function CalendarGrid({
       }}
     >
       {/* Header */}
-      <div className="grid grid-cols-6 bg-gradient-to-r from-slate-50/90 to-slate-100/90 border-b border-slate-200/50 backdrop-blur-sm">
-        <div className="p-4 font-semibold text-slate-700 text-sm border-r border-slate-200/50">
-          Time
+      <div className="grid grid-cols-6 gap-4 mb-6">
+        <div className="flex items-center justify-center h-16 bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl shadow-lg">
+          <span className="font-bold text-white text-sm">Time</span>
         </div>
         {WORKING_HOURS.days.map((day, index) => {
           const date = new Date(weekStart);
@@ -150,14 +150,18 @@ export default function CalendarGrid({
           const isToday = date.toDateString() === new Date().toDateString();
           
           return (
-            <div key={day} className="p-4 text-center border-r border-slate-200/50 last:border-r-0">
-              <div className={`font-semibold text-sm ${isToday ? 'text-blue-700 bg-blue-50/50 px-2 py-1 rounded-lg' : 'text-slate-700'}`}>
+            <div key={day} className={`flex flex-col items-center justify-center h-16 rounded-2xl shadow-lg text-center ${
+              isToday 
+                ? 'bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-blue-500/30' 
+                : 'bg-gradient-to-br from-gray-700 to-gray-800 text-white shadow-gray-700/30'
+            }`}>
+              <div className="font-bold text-sm">
                 <span className="hidden sm:inline">{day}</span>
                 <span className="sm:hidden">{day.slice(0, 3)}</span>
               </div>
-              <div className={`text-xs mt-1 ${isToday ? 'text-blue-600 font-medium' : 'text-slate-500'}`}>
+              <div className="text-xs opacity-90 mt-1">
                 {date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                {isToday && <span className="ml-1 bg-blue-100/70 px-1.5 py-0.5 rounded-full text-blue-700">(Today)</span>}
+                {isToday && <span className="ml-1 text-blue-100">(Today)</span>}
               </div>
             </div>
           );
@@ -165,18 +169,18 @@ export default function CalendarGrid({
       </div>
 
       {/* Time slots */}
-      <div className="relative">
+      <div className="space-y-3">
         {Array.from({ length: WORKING_HOURS.endTimeIndex - WORKING_HOURS.startTimeIndex }, (_, i) => {
           const timeIndex = WORKING_HOURS.startTimeIndex + i;
           const isHourMark = timeIndex % 2 === 0;
           
           return (
-            <div key={timeIndex} className={`grid grid-cols-6 ${isHourMark ? 'border-t-2 border-slate-200/60' : ''}`}>
+            <div key={timeIndex} className="grid grid-cols-6 gap-4 items-center">
               {/* Time label - only show on hour marks */}
-              <div className={`flex items-center justify-end pr-4 bg-gradient-to-r from-slate-50/80 to-slate-25/80 border-r border-slate-100/50 ${isHourMark ? 'h-16' : 'h-8'}`}>
+              <div className="flex items-center justify-center">
                 {isHourMark && (
-                  <div className="text-right">
-                    <div className="font-semibold text-slate-600 text-sm">
+                  <div className="bg-gradient-to-br from-gray-600 to-gray-700 text-white px-3 py-2 rounded-xl shadow-md text-center min-w-[80px]">
+                    <div className="font-bold text-xs">
                       <span className="hidden sm:inline">{formatTime(timeIndex)}</span>
                       <span className="sm:hidden">{formatTimeShort(timeIndex)}</span>
                     </div>
@@ -202,41 +206,33 @@ export default function CalendarGrid({
                   >
                     {/* Booking info - only show on first slot of booking */}
                     {booking && timeIndex === booking.startTimeIndex && (
-                      <div className="absolute inset-0 flex items-center justify-center p-1 z-10">
-                        <div className="text-center">
-                          <div className="font-semibold truncate text-xs leading-tight text-slate-600">{booking.customerName}</div>
-                          <div className="text-xs text-slate-500/80">{booking.duration}h</div>
-                        </div>
+                      <div className="text-center">
+                        <div className="font-bold truncate text-xs leading-tight drop-shadow-sm">{booking.customerName}</div>
+                        <div className="text-xs opacity-90 drop-shadow-sm">{booking.duration}h</div>
                       </div>
                     )}
                     
                     {/* Preview label - only show on first slot of preview */}
                     {status === 'preview' && hoveredSlot?.timeIndex === timeIndex && (
-                      <div className="absolute inset-0 flex items-center justify-center z-10">
-                        <div className="text-center">
-                          <div className="font-semibold text-xs leading-tight text-blue-800">Preview</div>
-                          <div className="text-xs text-blue-700/80">{duration}h</div>
-                        </div>
+                      <div className="text-center">
+                        <div className="font-bold text-xs leading-tight drop-shadow-sm">Preview</div>
+                        <div className="text-xs opacity-90 drop-shadow-sm">{duration}h</div>
                       </div>
                     )}
 
                     {/* Conflict label - only show on first slot of conflict during preview */}
                     {status === 'conflict' && hoveredSlot?.timeIndex === timeIndex && (
-                      <div className="absolute inset-0 flex items-center justify-center z-10">
-                        <div className="text-center">
-                          <div className="font-semibold text-xs leading-tight text-orange-800">Conflict</div>
-                          <div className="text-xs text-orange-700/80">{duration}h</div>
-                        </div>
+                      <div className="text-center">
+                        <div className="font-bold text-xs leading-tight drop-shadow-sm">Conflict</div>
+                        <div className="text-xs opacity-90 drop-shadow-sm">{duration}h</div>
                       </div>
                     )}
 
                     {/* Selected label - only show on first slot of selection */}
                     {status === 'selected' && selectedSlots?.startTimeIndex === timeIndex && (
-                      <div className="absolute inset-0 flex items-center justify-center z-10">
-                        <div className="text-center">
-                          <div className="font-semibold text-xs leading-tight text-blue-900">Selected</div>
-                          <div className="text-xs text-blue-800/80">{duration}h</div>
-                        </div>
+                      <div className="text-center">
+                        <div className="font-bold text-xs leading-tight drop-shadow-sm">Selected</div>
+                        <div className="text-xs opacity-90 drop-shadow-sm">{duration}h</div>
                       </div>
                     )}
                   </div>

@@ -88,33 +88,39 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <header className="mb-8">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-blue-900 bg-clip-text text-transparent mb-3">
-            J L Electrical Services
-          </h1>
-          <p className="text-lg text-gray-700 font-medium">
-            Professional electrical services booking - Monday to Friday, 8:00 AM to 4:00 PM
-          </p>
-          <p className="text-gray-600 mt-1">
-            Select your preferred time slot with 30-minute precision
-          </p>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-800 to-slate-900">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <header className="mb-12">
+          <div className="bg-gradient-to-br from-white to-gray-50 rounded-3xl shadow-2xl shadow-black/10 p-8 border border-gray-200/20">
+            <h1 className="text-5xl font-black bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-900 bg-clip-text text-transparent mb-4">
+              J L Electrical Services
+            </h1>
+            <p className="text-xl text-gray-700 font-semibold mb-2">
+              Professional electrical services booking - Monday to Friday, 8:00 AM to 4:00 PM
+            </p>
+            <p className="text-gray-600 text-lg">
+              Select your preferred time slot with 30-minute precision
+            </p>
+          </div>
         </header>
 
-        <div className="space-y-6">
-          <WeekNavigation 
-            currentWeek={currentWeek}
-            onWeekChange={setCurrentWeek}
-          />
+        <div className="space-y-8">
+          <div className="bg-gradient-to-br from-white to-gray-50 rounded-3xl shadow-2xl shadow-black/10 p-6 border border-gray-200/20">
+            <WeekNavigation 
+              currentWeek={currentWeek}
+              onWeekChange={setCurrentWeek}
+            />
+          </div>
 
-          <DurationSelector 
-            duration={duration} 
-            onDurationChange={(newDuration) => {
-              setDuration(newDuration);
-              setSelectedSlots(null); // Clear selection when duration changes
-            }} 
-          />
+          <div className="bg-gradient-to-br from-white to-gray-50 rounded-3xl shadow-2xl shadow-black/10 p-6 border border-gray-200/20">
+            <DurationSelector 
+              duration={duration} 
+              onDurationChange={(newDuration) => {
+                setDuration(newDuration);
+                setSelectedSlots(null); // Clear selection when duration changes
+              }} 
+            />
+          </div>
 
           <CalendarGrid
             weekStart={currentWeek}
@@ -126,38 +132,38 @@ export default function Home() {
           />
         </div>
 
-        <div className="mt-8 p-6 bg-white rounded-2xl shadow-lg border border-gray-100">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">How to Book</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+        <div className="mt-12 bg-gradient-to-br from-white to-gray-50 rounded-3xl shadow-2xl shadow-black/10 p-8 border border-gray-200/20">
+          <h3 className="text-2xl font-bold text-gray-900 mb-6">How to Book</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
-              <h4 className="font-medium text-gray-900 mb-2">Color Legend:</h4>
-              <div className="space-y-2">
-                <div className="flex items-center gap-3">
-                  <div className="w-4 h-4 bg-gradient-to-br from-green-50 to-emerald-50 border-l-2 border-l-green-400 rounded"></div>
-                  <span className="text-gray-700">Available</span>
+              <h4 className="font-bold text-gray-900 mb-4 text-lg">Color Legend:</h4>
+              <div className="space-y-3">
+                <div className="flex items-center gap-4">
+                  <div className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl shadow-lg shadow-emerald-500/25"></div>
+                  <span className="text-gray-700 font-medium">Available</span>
                 </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-4 h-4 bg-gradient-to-br from-red-50 to-rose-50 border-l-2 border-l-red-300 rounded"></div>
-                  <span className="text-gray-700">Booked</span>
+                <div className="flex items-center gap-4">
+                  <div className="w-8 h-8 bg-gradient-to-br from-slate-400 to-slate-500 rounded-xl shadow-md shadow-slate-500/20 opacity-60"></div>
+                  <span className="text-gray-700 font-medium">Booked</span>
                 </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-4 h-4 bg-gradient-to-br from-blue-100 to-indigo-100 border-l-2 border-l-blue-400 rounded"></div>
-                  <span className="text-gray-700">Preview / Selected</span>
+                <div className="flex items-center gap-4">
+                  <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl shadow-xl shadow-blue-500/30"></div>
+                  <span className="text-gray-700 font-medium">Preview / Selected</span>
                 </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-4 h-4 bg-gradient-to-br from-orange-100 to-amber-100 border-l-2 border-l-orange-400 rounded"></div>
-                  <span className="text-gray-700">Conflict</span>
+                <div className="flex items-center gap-4">
+                  <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl shadow-xl shadow-orange-500/30"></div>
+                  <span className="text-gray-700 font-medium">Conflict</span>
                 </div>
               </div>
             </div>
             <div>
-              <h4 className="font-medium text-gray-900 mb-2">Instructions:</h4>
-              <div className="space-y-1 text-gray-600">
-                <p>1. Select job duration above</p>
-                <p>2. Hover to preview time slots</p>
-                <p>3. Click to select time slot</p>
-                <p>4. Use &ldquo;Book Now&rdquo; button to confirm</p>
-                <p>5. Navigate weeks to book future dates</p>
+              <h4 className="font-bold text-gray-900 mb-4 text-lg">Instructions:</h4>
+              <div className="space-y-2 text-gray-700">
+                <p className="font-medium">1. Select job duration above</p>
+                <p className="font-medium">2. Hover to preview time slots</p>
+                <p className="font-medium">3. Click to select time slot</p>
+                <p className="font-medium">4. Use &ldquo;Book Now&rdquo; button to confirm</p>
+                <p className="font-medium">5. Navigate weeks to book future dates</p>
               </div>
             </div>
           </div>

@@ -17,7 +17,7 @@ export default function BookingModal({
   isOpen,
   onClose,
   onConfirm,
-  day,
+  day: _day, // eslint-disable-line @typescript-eslint/no-unused-vars
   date,
   startTimeIndex,
   duration

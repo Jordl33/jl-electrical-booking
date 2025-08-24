@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import DurationSelector from '@/components/DurationSelector';
 import CalendarGrid from '@/components/CalendarGrid';
 import BookingModal from '@/components/BookingModal';
@@ -8,7 +8,6 @@ import WeekNavigation from '@/components/WeekNavigation';
 import BookNowButton from '@/components/BookNowButton';
 import { Booking } from '@/types/booking';
 import { mockBookings } from '@/data/mockBookings';
-import { hourToTimeIndex } from '@/lib/bookingUtils';
 
 export default function Home() {
   const [duration, setDuration] = useState(2);
@@ -157,7 +156,7 @@ export default function Home() {
                 <p>1. Select job duration above</p>
                 <p>2. Hover to preview time slots</p>
                 <p>3. Click to select time slot</p>
-                <p>4. Use "Book Now" button to confirm</p>
+                <p>4. Use &ldquo;Book Now&rdquo; button to confirm</p>
                 <p>5. Navigate weeks to book future dates</p>
               </div>
             </div>

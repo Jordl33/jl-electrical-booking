@@ -85,7 +85,7 @@ export default function CalendarGrid({
   };
 
   const getSlotClassName = (status: SlotStatus, isClickable: boolean): string => {
-    const baseClasses = 'h-12 m-0.5 rounded-xl text-xs font-semibold transition-all duration-300 cursor-pointer relative flex items-center justify-center border-0';
+    const baseClasses = 'h-10 m-0.5 rounded-lg text-xs font-semibold transition-all duration-300 cursor-pointer relative flex items-center justify-center border-0';
     
     switch (status) {
       case 'available':
@@ -132,7 +132,7 @@ export default function CalendarGrid({
 
   return (
     <div 
-      className="bg-gradient-to-br from-gray-50 to-white rounded-3xl shadow-2xl shadow-gray-900/10 border border-gray-200/20 overflow-hidden p-6"
+      className="bg-gradient-to-br from-gray-50 to-white rounded-2xl shadow-2xl shadow-gray-900/10 border border-gray-200/20 overflow-hidden p-4"
       onClick={(e) => {
         if (e.target === e.currentTarget) {
           onSlotDeselect();
@@ -140,8 +140,8 @@ export default function CalendarGrid({
       }}
     >
       {/* Header */}
-      <div className="grid grid-cols-6 gap-4 mb-6">
-        <div className="flex items-center justify-center h-16 bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl shadow-lg">
+      <div className="grid grid-cols-6 gap-3 mb-4">
+        <div className="flex items-center justify-center h-12 bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl shadow-lg">
           <span className="font-bold text-white text-sm">Time</span>
         </div>
         {WORKING_HOURS.days.map((day, index) => {
@@ -150,7 +150,7 @@ export default function CalendarGrid({
           const isToday = date.toDateString() === new Date().toDateString();
           
           return (
-            <div key={day} className={`flex flex-col items-center justify-center h-16 rounded-2xl shadow-lg text-center ${
+            <div key={day} className={`flex flex-col items-center justify-center h-12 rounded-xl shadow-lg text-center ${
               isToday 
                 ? 'bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-blue-500/30' 
                 : 'bg-gradient-to-br from-gray-700 to-gray-800 text-white shadow-gray-700/30'
@@ -159,7 +159,7 @@ export default function CalendarGrid({
                 <span className="hidden sm:inline">{day}</span>
                 <span className="sm:hidden">{day.slice(0, 3)}</span>
               </div>
-              <div className="text-xs opacity-90 mt-1">
+              <div className="text-xs opacity-90">
                 {date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                 {isToday && <span className="ml-1 text-blue-100">(Today)</span>}
               </div>
@@ -169,17 +169,17 @@ export default function CalendarGrid({
       </div>
 
       {/* Time slots */}
-      <div className="space-y-3">
+      <div className="space-y-2">
         {Array.from({ length: WORKING_HOURS.endTimeIndex - WORKING_HOURS.startTimeIndex }, (_, i) => {
           const timeIndex = WORKING_HOURS.startTimeIndex + i;
           const isHourMark = timeIndex % 2 === 0;
           
           return (
-            <div key={timeIndex} className="grid grid-cols-6 gap-4 items-center">
+            <div key={timeIndex} className="grid grid-cols-6 gap-3 items-center">
               {/* Time label - only show on hour marks */}
               <div className="flex items-center justify-center">
                 {isHourMark && (
-                  <div className="bg-gradient-to-br from-gray-600 to-gray-700 text-white px-3 py-2 rounded-xl shadow-md text-center min-w-[80px]">
+                  <div className="bg-gradient-to-br from-gray-600 to-gray-700 text-white px-2 py-1 rounded-lg shadow-md text-center min-w-[70px]">
                     <div className="font-bold text-xs">
                       <span className="hidden sm:inline">{formatTime(timeIndex)}</span>
                       <span className="sm:hidden">{formatTimeShort(timeIndex)}</span>

@@ -64,33 +64,33 @@ export default function WeekNavigation({ currentWeek, onWeekChange }: WeekNaviga
   };
 
   return (
-    <div className="flex items-center justify-between px-8 py-6">
-      <div className="flex items-center gap-6">
+    <div className="flex items-center justify-between px-6 py-4">
+      <div className="flex items-center gap-4">
         <button
           onClick={goToPreviousWeek}
           disabled={isPastWeek()}
-          className="flex items-center justify-center w-14 h-14 bg-gradient-to-br from-gray-700 to-gray-800 hover:from-gray-600 hover:to-gray-700 rounded-2xl shadow-xl shadow-gray-700/30 transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:from-gray-700 disabled:hover:to-gray-800 transform hover:scale-105 active:scale-95"
+          className="flex items-center justify-center w-10 h-10 bg-gradient-to-br from-gray-700 to-gray-800 hover:from-gray-600 hover:to-gray-700 rounded-xl shadow-lg shadow-gray-700/30 transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:from-gray-700 disabled:hover:to-gray-800 transform hover:scale-105 active:scale-95"
         >
-          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
         </button>
         
         <div className="text-center">
-          <h2 className="text-2xl font-black text-gray-900 mb-1">
+          <h2 className="text-xl font-black text-gray-900">
             {formatWeekRange(currentWeek)}
           </h2>
-          <p className="text-lg font-bold text-gray-600">
+          <p className="text-sm font-bold text-gray-600">
             {isCurrentWeek() ? 'This Week' : 'Week of'}
           </p>
         </div>
       </div>
       
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
         {!isCurrentWeek() && (
           <button
             onClick={goToCurrentWeek}
-            className="px-6 py-3 text-lg font-bold text-white bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 rounded-2xl transition-all duration-300 shadow-xl shadow-blue-500/30 hover:shadow-2xl hover:shadow-blue-500/40 transform hover:scale-105 active:scale-95"
+            className="px-4 py-2 text-sm font-bold text-white bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 rounded-xl transition-all duration-300 shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 transform hover:scale-105 active:scale-95"
           >
             Today
           </button>
@@ -98,9 +98,9 @@ export default function WeekNavigation({ currentWeek, onWeekChange }: WeekNaviga
         
         <button
           onClick={goToNextWeek}
-          className="flex items-center justify-center w-14 h-14 bg-gradient-to-br from-gray-700 to-gray-800 hover:from-gray-600 hover:to-gray-700 rounded-2xl shadow-xl shadow-gray-700/30 transition-all duration-300 transform hover:scale-105 active:scale-95"
+          className="flex items-center justify-center w-10 h-10 bg-gradient-to-br from-gray-700 to-gray-800 hover:from-gray-600 hover:to-gray-700 rounded-xl shadow-lg shadow-gray-700/30 transition-all duration-300 transform hover:scale-105 active:scale-95"
         >
-          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>
         </button>

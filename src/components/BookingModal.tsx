@@ -2,6 +2,12 @@
 
 import { useState } from 'react';
 import { formatTime } from '@/lib/bookingUtils';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { Badge } from '@/components/ui/badge';
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -58,69 +64,68 @@ export default function BookingModal({
   });
 
   return (
-    <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-2xl shadow-black/20 max-w-lg w-full max-h-[90vh] overflow-y-auto border border-gray-200/20">
-        <div className="p-6">
-          <h2 className="text-2xl font-black text-gray-900 mb-4">Book Appointment</h2>
-          
-          <div className="mb-4 p-4 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl shadow-xl shadow-blue-500/30">
-            <div className="text-white">
-              <div className="font-bold mb-1">{formattedDate}</div>
-              <div className="font-bold text-lg">{formatTime(startTimeIndex)} - {formatTime(endTimeIndex)}</div>
-              <div className="bg-white/20 text-white font-bold px-3 py-1 rounded-full text-center mt-2 backdrop-blur-sm text-sm">{duration} hour{duration !== 1 ? 's' : ''}</div>
-            </div>
+    <Dialog open={isOpen} onOpenChange={handleClose}>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle>Book Appointment</DialogTitle>
+        </DialogHeader>
+        
+        <div className="mb-4 p-4 bg-blue-50 rounded-lg border border-blue-100">
+          <div className="space-y-2">
+            <div className="font-semibold text-blue-900">{formattedDate}</div>
+            <div className="font-medium text-blue-800">{formatTime(startTimeIndex)} - {formatTime(endTimeIndex)}</div>
+            <Badge variant="secondary" className="w-fit">
+              {duration} hour{duration !== 1 ? 's' : ''}
+            </Badge>
+          </div>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="customerName">Customer Name *</Label>
+            <Input
+              id="customerName"
+              type="text"
+              value={customerName}
+              onChange={(e) => setCustomerName(e.target.value)}
+              required
+              autoFocus
+              placeholder="Enter customer name"
+            />
           </div>
 
-          <form onSubmit={handleSubmit}>
-            <div className="mb-4">
-              <label htmlFor="customerName" className="block font-bold text-gray-900 mb-2">
-                Customer Name *
-              </label>
-              <input
-                id="customerName"
-                type="text"
-                value={customerName}
-                onChange={(e) => setCustomerName(e.target.value)}
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 font-medium"
-                required
-                autoFocus
-              />
-            </div>
+          <div className="space-y-2">
+            <Label htmlFor="description">Job Description (Optional)</Label>
+            <Textarea
+              id="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              rows={3}
+              placeholder="Brief description of the electrical work needed..."
+              className="resize-none"
+            />
+          </div>
 
-            <div className="mb-6">
-              <label htmlFor="description" className="block font-bold text-gray-900 mb-2">
-                Job Description (Optional)
-              </label>
-              <textarea
-                id="description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                rows={3}
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-200 resize-none font-medium"
-                placeholder="Brief description of the electrical work needed..."
-              />
-            </div>
-
-            <div className="flex gap-4">
-              <button
-                type="button"
-                onClick={handleClose}
-                className="flex-1 py-3 font-bold text-gray-700 bg-gradient-to-br from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95"
-                disabled={isSubmitting}
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className="flex-1 py-3 font-bold text-white bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 rounded-xl transition-all duration-200 shadow-xl shadow-emerald-500/30 hover:shadow-2xl hover:shadow-emerald-500/40 transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-                disabled={!customerName.trim() || isSubmitting}
-              >
-                {isSubmitting ? 'Booking...' : 'Book Appointment'}
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+          <div className="flex gap-3 pt-4">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleClose}
+              disabled={isSubmitting}
+              className="flex-1"
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              disabled={!customerName.trim() || isSubmitting}
+              className="flex-1"
+            >
+              {isSubmitting ? 'Booking...' : 'Book Appointment'}
+            </Button>
+          </div>
+        </form>
+      </DialogContent>
+    </Dialog>
   );
 }

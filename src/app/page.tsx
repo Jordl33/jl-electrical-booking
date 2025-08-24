@@ -8,6 +8,8 @@ import WeekNavigation from '@/components/WeekNavigation';
 import BookNowButton from '@/components/BookNowButton';
 import { Booking } from '@/types/booking';
 import { mockBookings } from '@/data/mockBookings';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 export default function Home() {
   const [duration, setDuration] = useState(2);
@@ -88,39 +90,43 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-800 to-slate-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <header className="mb-6">
-          <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-2xl shadow-black/10 p-6 border border-gray-200/20">
-            <h1 className="text-4xl font-black bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-900 bg-clip-text text-transparent mb-2">
-              J L Electrical Services
-            </h1>
-            <p className="text-lg text-gray-700 font-semibold mb-1">
-              Professional electrical services booking - Monday to Friday, 8:00 AM to 4:00 PM
-            </p>
-            <p className="text-gray-600">
-              Select your preferred time slot with 30-minute precision
-            </p>
-          </div>
-        </header>
+    <div className="min-h-screen bg-background">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle className="text-3xl">J L Electrical Services</CardTitle>
+            <div className="space-y-2">
+              <p className="text-muted-foreground">
+                Professional electrical services booking - Monday to Friday, 8:00 AM to 4:00 PM
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Select your preferred time slot with 30-minute precision
+              </p>
+            </div>
+          </CardHeader>
+        </Card>
 
-        <div className="space-y-4">
-          <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-2xl shadow-black/10 p-4 border border-gray-200/20">
-            <WeekNavigation 
-              currentWeek={currentWeek}
-              onWeekChange={setCurrentWeek}
-            />
-          </div>
+        <div className="space-y-6">
+          <Card>
+            <CardContent className="pt-6">
+              <WeekNavigation 
+                currentWeek={currentWeek}
+                onWeekChange={setCurrentWeek}
+              />
+            </CardContent>
+          </Card>
 
-          <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-2xl shadow-black/10 p-4 border border-gray-200/20">
-            <DurationSelector 
-              duration={duration} 
-              onDurationChange={(newDuration) => {
-                setDuration(newDuration);
-                setSelectedSlots(null); // Clear selection when duration changes
-              }} 
-            />
-          </div>
+          <Card>
+            <CardContent className="pt-6">
+              <DurationSelector 
+                duration={duration} 
+                onDurationChange={(newDuration) => {
+                  setDuration(newDuration);
+                  setSelectedSlots(null); // Clear selection when duration changes
+                }} 
+              />
+            </CardContent>
+          </Card>
 
           <CalendarGrid
             weekStart={currentWeek}
@@ -132,42 +138,46 @@ export default function Home() {
           />
         </div>
 
-        <div className="mt-6 bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-2xl shadow-black/10 p-6 border border-gray-200/20">
-          <h3 className="text-xl font-bold text-gray-900 mb-4">How to Book</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <h4 className="font-bold text-gray-900 mb-3">Color Legend:</h4>
-              <div className="space-y-2">
-                <div className="flex items-center gap-3">
-                  <div className="w-6 h-6 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-lg shadow-lg shadow-emerald-500/25"></div>
-                  <span className="text-gray-700 font-medium text-sm">Available</span>
+        <Card className="mt-8">
+          <CardHeader>
+            <CardTitle>How to Book</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h4 className="font-semibold mb-3">Color Legend:</h4>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-3">
+                    <Badge variant="outline" className="w-6 h-6 p-0 bg-primary/10 border-primary/20"></Badge>
+                    <span className="text-sm">Available</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Badge variant="outline" className="w-6 h-6 p-0 bg-muted border-muted-foreground/20"></Badge>
+                    <span className="text-sm">Booked</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Badge className="w-6 h-6 p-0 bg-blue-500"></Badge>
+                    <span className="text-sm">Preview / Selected</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Badge variant="outline" className="w-6 h-6 p-0 bg-destructive/10 border-destructive/20"></Badge>
+                    <span className="text-sm">Conflict</span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-6 h-6 bg-gradient-to-br from-slate-400 to-slate-500 rounded-lg shadow-md shadow-slate-500/20 opacity-60"></div>
-                  <span className="text-gray-700 font-medium text-sm">Booked</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-6 h-6 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg shadow-xl shadow-blue-500/30"></div>
-                  <span className="text-gray-700 font-medium text-sm">Preview / Selected</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-6 h-6 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg shadow-xl shadow-orange-500/30"></div>
-                  <span className="text-gray-700 font-medium text-sm">Conflict</span>
+              </div>
+              <div>
+                <h4 className="font-semibold mb-3">Instructions:</h4>
+                <div className="space-y-1 text-sm text-muted-foreground">
+                  <p>1. Select job duration above</p>
+                  <p>2. Hover to preview time slots</p>
+                  <p>3. Click to select time slot</p>
+                  <p>4. Use &ldquo;Book Now&rdquo; button to confirm</p>
+                  <p>5. Navigate weeks to book future dates</p>
                 </div>
               </div>
             </div>
-            <div>
-              <h4 className="font-bold text-gray-900 mb-3">Instructions:</h4>
-              <div className="space-y-1 text-gray-700">
-                <p className="font-medium text-sm">1. Select job duration above</p>
-                <p className="font-medium text-sm">2. Hover to preview time slots</p>
-                <p className="font-medium text-sm">3. Click to select time slot</p>
-                <p className="font-medium text-sm">4. Use &ldquo;Book Now&rdquo; button to confirm</p>
-                <p className="font-medium text-sm">5. Navigate weeks to book future dates</p>
-              </div>
-            </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
 
         <BookNowButton
           isVisible={!!selectedSlots}
